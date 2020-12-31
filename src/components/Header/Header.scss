@@ -1,0 +1,32 @@
+@import '../../root-colors.scss';
+
+.weather-container {
+  margin-right: 145px;
+  margin-left: 145px;
+  height: 60px;
+  margin-top: 65px;
+  display: flex;
+  justify-content: space-between;
+  p {
+    font-size: 40px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+  }
+  button {
+    cursor: pointer;
+    border: none;
+    background-image: url('../../assets/add.svg');
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+    margin: 10px;
+    &:hover {
+      background-image: url('../../assets/add-hover.svg');
+      transform: scale(1.05);
+      transition: 0.3s;
+    }
+  }
+}

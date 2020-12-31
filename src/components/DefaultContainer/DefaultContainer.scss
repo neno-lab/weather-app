@@ -1,0 +1,13 @@
+@import '../../root-colors.scss';
+
+.default-container {
+  margin-right: 145px;
+  margin-left: 145px;
+  height: 471px;
+  margin-top: 85px;
+  background-color: $primaryLight;
+  border-radius: 40px;
+  p {
+    color: $neutral;
+  }
+}

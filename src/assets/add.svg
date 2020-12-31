@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g transform="translate(-473 -61) translate(473 61)">
+                <rect width="40" height="40" fill="#2581FF" rx="20"/>
+                <rect width="2.727" height="18.182" x="18.517" y="11.244" fill="#000" rx="1.364"/>
+                <path fill="#000" d="M19.88 11.244c.753 0 1.364.61 1.364 1.364v15.454c0 .753-.61 1.364-1.364 1.364-.753 0-1.363-.61-1.363-1.364V12.608c0-.754.61-1.364 1.363-1.364z" transform="rotate(-90 19.88 20.335)"/>
+            </g>
+        </g>
+    </g>
+</svg>
