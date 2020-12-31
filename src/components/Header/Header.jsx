@@ -4,7 +4,7 @@ import './Header.scss';
 const Header = () => {
   return (
     <div className='weather-container'>
-      <p>Weather App</p>
+      <p>Weather app</p>
       <button></button>
     </div>
   );

@@ -1,0 +1,73 @@
+@import '../../root-colors.scss';
+
+.add-location-card {
+  background-color: $neutral;
+  width: 414px;
+  height: 327px;
+  border-radius: 30px;
+
+  .title,
+  .search-bar,
+  .location,
+  h2 {
+    background-color: transparent;
+    color: $primaryDark;
+  }
+
+  h2 {
+    font-size: 40px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+  }
+
+  label {
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+  }
+
+  input {
+    font-size: 19px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    border-radius: 15px;
+    border: solid 1px #d3d3d3;
+    width: 374px;
+    height: 67px;
+    background-color: transparent;
+    padding: 36px 217px 15px 16px;
+
+    &::placeholder {
+      color: $primaryDark;
+    }
+  }
+
+  .add-location-btn {
+    width: 374px;
+    height: 60px;
+    border: none;
+    border-radius: 20px;
+    background-color: $secondary;
+    color: $neutral;
+    font-size: 20px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+  }
+
+  .title {
+    justify-content: center;
+    align-items: center;
+  }
+}

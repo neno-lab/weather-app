@@ -7,7 +7,48 @@
   margin-top: 85px;
   background-color: $primaryLight;
   border-radius: 40px;
-  p {
-    color: $neutral;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  .default-text {
+    background-color: transparent;
+    margin-top: 10px;
+    .pleading-face {
+      margin: auto;
+      background-color: transparent;
+      background-image: url('../../assets/pleading-face.png');
+      background-repeat: no-repeat;
+      width: 141px;
+      height: 185px;
+    }
+    h3 {
+      background-color: transparent;
+    }
+    p {
+      padding-top: 10px;
+      color: $gray;
+      background-color: transparent;
+    }
+    button {
+      cursor: pointer;
+      margin-top: 35px;
+      border: none;
+      background-color: $secondary;
+      width: 374px;
+      height: 60px;
+      border-radius: 20px;
+      font-size: 20px;
+      font-weight: 600;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
+
+      //   &:hover {
+      //     transform: scale(1.05);
+      //     transition: 0.2s;
+      //   }
+    }
   }
 }
