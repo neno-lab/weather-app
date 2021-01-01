@@ -11,7 +11,7 @@ const App = () => {
       <Switch>
         <Route exact path='/' component={Home} />
         <Route exact path='/weather' component={WeatherDetailPage} />
-        <Route exact path='/location' component={AddLocation} />
+        <Route path='/' render={() => <h1>Not Found</h1>} />
       </Switch>
     </Router>
   );

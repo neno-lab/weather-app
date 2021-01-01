@@ -1,73 +1,133 @@
 @import '../../root-colors.scss';
 
-.add-location-card {
-  background-color: $neutral;
-  width: 414px;
-  height: 327px;
-  border-radius: 30px;
+.location-container {
+  width: 100%;
+  height: 100%;
+  background: rgba(75, 75, 75, 0.75);
+  // filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+}
 
-  .title,
-  .search-bar,
-  .location,
-  h2 {
-    background-color: transparent;
-    color: $primaryDark;
-  }
-
-  h2 {
-    font-size: 40px;
-    font-weight: 600;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-  }
-
-  label {
-    font-size: 16px;
-    font-weight: 500;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-  }
-
-  input {
-    font-size: 19px;
-    font-weight: 500;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    border-radius: 15px;
-    border: solid 1px #d3d3d3;
-    width: 374px;
-    height: 67px;
-    background-color: transparent;
-    padding: 36px 217px 15px 16px;
-
-    &::placeholder {
-      color: $primaryDark;
-    }
-  }
-
-  .add-location-btn {
-    width: 374px;
-    height: 60px;
-    border: none;
-    border-radius: 20px;
-    background-color: $secondary;
-    color: $neutral;
-    font-size: 20px;
-    font-weight: 600;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-  }
-
-  .title {
+.form {
+  background: none;
+  .add-location-card {
+    background-color: $neutral;
+    width: 414px;
+    height: 327px;
+    border-radius: 30px;
+    display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    z-index: 2;
+
+    .title,
+    .search-bar,
+    .location,
+    h2 {
+      background-color: transparent;
+      color: $primaryDark;
+    }
+
+    .title {
+      display: flex;
+      align-items: center;
+      column-gap: 55px;
+      margin-top: 45px;
+
+      h2 {
+        font-size: 40px;
+        font-weight: 600;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: normal;
+      }
+
+      .cancel-btn {
+        cursor: pointer;
+        background-color: transparent;
+        border: none;
+        background-image: url('../../assets/x.svg');
+        background-repeat: no-repeat;
+        width: 50px;
+        height: 50px;
+        background-position: center;
+
+        &:hover {
+          border-radius: 30px;
+          background-color: $gray;
+        }
+      }
+    }
+
+    .search-bar {
+      position: relative;
+
+      label {
+        position: absolute;
+        top: 43px;
+        left: 15px;
+        font-size: 16px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        background-color: transparent;
+        color: $gray;
+      }
+
+      input {
+        margin-top: 37px;
+        font-size: 19px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        border-radius: 15px;
+        border: solid 1px $gray;
+        width: 374px;
+        height: 67px;
+        background-color: transparent;
+        padding: 36px 217px 15px 16px;
+        caret-color: $primaryDark;
+        color: $primaryDark;
+
+        &::placeholder {
+          color: $primaryDark;
+        }
+
+        &:focus {
+          border: solid 1px $secondary;
+          outline: none;
+        }
+      }
+    }
+
+    .add-location-btn {
+      cursor: pointer;
+      width: 374px;
+      height: 60px;
+      border: none;
+      border-radius: 20px;
+      background-color: $secondary;
+      color: $neutral;
+      font-size: 20px;
+      font-weight: 600;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      margin-top: 45px;
+      margin-bottom: 60px;
+    }
   }
 }

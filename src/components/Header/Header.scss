@@ -7,7 +7,9 @@
   margin-top: 65px;
   display: flex;
   justify-content: space-between;
-  p {
+  z-index: 1;
+  position: relative;
+  .weather-app {
     font-size: 40px;
     font-weight: 600;
     font-stretch: normal;
@@ -15,7 +17,7 @@
     line-height: normal;
     letter-spacing: normal;
   }
-  button {
+  .plus-btn {
     cursor: pointer;
     border: none;
     background-image: url('../../assets/add.svg');
