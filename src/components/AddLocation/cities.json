@@ -1,0 +1,92 @@
+[
+    {
+        "id": 3337532,
+        "name": "Grad Zagreb",
+        "state": "",
+        "country": "HR",
+        "coord": {
+            "lon": 15.9773,
+            "lat": 45.813068
+        }
+    },
+    {
+        "id": 3190261,
+        "name": "Split",
+        "state": "",
+        "country": "HR",
+        "coord": {
+            "lon": 16.43915,
+            "lat": 43.508911
+        }
+    },
+    {
+        "id": 3194114,
+        "name": "Omiš",
+        "state": "",
+        "country": "HR",
+        "coord": {
+            "lon": 16.68861,
+            "lat": 43.444721
+        }
+    },
+    {
+        "id": 3186952,
+        "name": "Zadar",
+        "state": "",
+        "country": "HR",
+        "coord": {
+            "lon": 15.24222,
+            "lat": 44.11972
+        }
+    },
+    {
+        "id": 3191648,
+        "name": "Rijeka",
+        "state": "",
+        "country": "HR",
+        "coord": {
+            "lon": 14.40917,
+            "lat": 45.34306
+        }
+    },
+    {
+        "id": 3193935,
+        "name": "Osijek",
+        "state": "",
+        "country": "HR",
+        "coord": {
+            "lon": 18.69389,
+            "lat": 45.551109
+        }
+    },
+    {
+        "id": 3194422,
+        "name": "Novalja",
+        "state": "",
+        "country": "HR",
+        "coord": {
+            "lon": 14.88667,
+            "lat": 44.557781
+        }
+    },
+    {
+        "id": 5128581,
+        "name": "New York City",
+        "state": "NY",
+        "country": "US",
+        "coord": {
+            "lon": -74.005966,
+            "lat": 40.714272
+        }
+    },
+    {
+        "id": 5368361,
+        "name": "Los Angeles",
+        "state": "CA",
+        "country": "US",
+        "coord": {
+            "lon": -118.243683,
+            "lat": 34.052231
+        }
+    }
+]

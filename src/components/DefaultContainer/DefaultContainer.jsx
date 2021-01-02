@@ -3,10 +3,10 @@ import AddLocation from '../AddLocation/AddLocation';
 import './DefaultContainer.scss';
 
 const DefaultContainer = () => {
-  const [isBlur, setIsBlur] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const onClick = (e) => {
     e.preventDefault();
-    setIsBlur(true);
+    setIsOpen(true);
   };
 
   return (
@@ -23,7 +23,7 @@ const DefaultContainer = () => {
           <button onClick={onClick}>Add location</button>
         </div>
       </div>
-      <AddLocation blur={isBlur} />
+      <AddLocation open={isOpen} onClose={() => setIsOpen(false)} />
     </>
   );
 };
