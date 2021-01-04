@@ -93,14 +93,51 @@
       justify-content: space-between;
       align-items: center;
 
-      .days {
+      .days-container {
         background: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        width: 300px;
+        height: 45px;
+        border-radius: 15px;
+        background-color: rgba(0, 0, 0, 0.1);
         margin-left: 45px;
         margin-top: 15px;
         margin-bottom: 45px;
 
-        .days-title {
+        .days-item {
           background: none;
+          list-style: none;
+          cursor: pointer;
+          margin-right: 2px;
+          margin-left: 2px;
+
+          &:hover {
+            border-radius: 15px;
+            background-color: #ffffff4d;
+          }
+
+          &:focus {
+            background-color: $neutral;
+            color: $primaryDark;
+          }
+
+          .days-title {
+            background: none;
+            font-size: 16px;
+            font-weight: normal;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            color: $neutral;
+            padding-top: 9px;
+            padding-bottom: 9px;
+            padding-right: 10px;
+            padding-left: 10px;
+          }
         }
       }
     }
@@ -198,7 +235,7 @@
       color: $neutral;
     }
 
-    ul {
+    .city-container {
       background: none;
       list-style: none;
       display: flex;
@@ -206,7 +243,7 @@
       justify-content: center;
       align-items: center;
 
-      li {
+      .city-item {
         display: flex;
         justify-content: space-between;
         align-items: center;

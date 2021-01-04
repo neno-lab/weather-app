@@ -6,17 +6,18 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import './AddLocation.scss';
 import { useHistory } from 'react-router-dom';
-import { addCity } from '../../redux/actions/locationActions';
+import { addCityToUrl } from '../../redux/actions/locationActions';
 
-const AddLocation = ({ open, onClose, addCity }) => {
+const AddLocation = ({ open, onClose, addCityToUrl }) => {
   const { register, handleSubmit } = useForm();
   const [city, setCity] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const history = useHistory();
 
   const onSubmit = (data) => {
-    console.log(data);
-    addCity(data);
+    if (!data.city) return;
+    console.log('Data: ', data);
+    addCityToUrl(data);
     history.push('/weather');
   };
 
@@ -31,7 +32,11 @@ const AddLocation = ({ open, onClose, addCity }) => {
         <div className='add-location-card'>
           <div className='title'>
             <h2>Add location</h2>
-            <button className='cancel-btn' onClose={onClose}></button>
+            <button
+              className='cancel-btn'
+              onClick={onClose}
+              type='button'
+            ></button>
           </div>
           <div className='search-bar'>
             <label htmlFor='city'>City</label>
@@ -67,7 +72,11 @@ const AddLocation = ({ open, onClose, addCity }) => {
             />
           </div>
           <div className='location'>
-            <button className='add-location-btn' type='submit'>
+            <button
+              className='add-location-btn'
+              type='button'
+              onClick={onClose}
+            >
               Add location
             </button>
           </div>
@@ -79,7 +88,7 @@ const AddLocation = ({ open, onClose, addCity }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addCity: bindActionCreators(addCity, dispatch),
+    addCityToUrl: bindActionCreators(addCityToUrl, dispatch),
   };
 };
 

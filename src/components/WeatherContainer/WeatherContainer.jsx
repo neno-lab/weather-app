@@ -3,8 +3,9 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import './WeatherContainer.scss';
+import { addCity, deleteCity } from '../../redux/actions/locationActions';
 
-const WeatherContainer = ({ city }) => {
+const WeatherContainer = ({ city, cities, addCity, deleteCity }) => {
   const API_KEY = 'e36ca5c9259a10df068bc915c2f2b4a4';
 
   useEffect(() => {
@@ -13,7 +14,8 @@ const WeatherContainer = ({ city }) => {
         const getCity = await axios.get(
           `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`
         );
-        console.log(getCity);
+        addCity(getCity.data);
+        console.log('get: ', getCity);
         const latLon = {
           lat: getCity.data.coord.lat,
           lon: getCity.data.coord.lon,
@@ -28,7 +30,42 @@ const WeatherContainer = ({ city }) => {
       }
     };
     fetchData();
-  }, [city]);
+  }, [city, addCity]);
+
+  const calculateAverageTemp = (temp) => {
+    let averageTemp = (temp.morn + temp.day + temp.eve + temp.night) / 4 - 273;
+    let rounded = averageTemp.toFixed(1);
+
+    return rounded;
+  };
+
+  const calculateSunrise = (sunrise) => {
+    let date = new Date(sunrise * 1000);
+    let hours = date.getHours();
+    let minutes = '0' + date.getMinutes();
+
+    let amPm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    let formattedTime = 'At' + hours + ':' + minutes + amPm;
+
+    return formattedTime;
+  };
+
+  const calculateSunset = (sunset) => {
+    let date = new Date(sunset * 1000);
+    let hours = date.getHours();
+    let minutes = '0' + date.getMinutes();
+
+    let amPm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    let formattedTime = 'At' + hours + ':' + minutes + amPm;
+
+    return formattedTime;
+  };
 
   return (
     <div className='weather-container'>
@@ -47,9 +84,17 @@ const WeatherContainer = ({ city }) => {
         </div>
 
         <div className='bottom-details'>
-          <div className='days'>
-            <p className='days-title'>today, tomorrow, wednesday</p>
-          </div>
+          <ul className='days-container'>
+            <li className='days-item'>
+              <p className='days-title'>Today</p>
+            </li>
+            <li className='days-item'>
+              <p className='days-title'>Tomorrow</p>
+            </li>
+            <li className='days-item'>
+              <p className='days-title'>Wednesday</p>
+            </li>
+          </ul>
           <div className='sunrise-sunset'>
             <div className='sunrise'>
               <p className='sunrise-title'>SUNRISE</p>
@@ -65,27 +110,16 @@ const WeatherContainer = ({ city }) => {
 
       <div className='favorites-container'>
         <p className='favorite-city-title'>Favorite city</p>
-        <ul>
-          <li>
-            <div className='city'>Split, Croatia</div>
-            <div className='cancel-btn'></div>
-          </li>
-          <li>
-            <div className='city'>Split, Croatia</div>
-            <div className='cancel-btn'></div>
-          </li>
-          <li>
-            <div className='city'>Split, Croatia</div>
-            <div className='cancel-btn'></div>
-          </li>
-          <li>
-            <div className='city'>Split, Croatia</div>
-            <div className='cancel-btn'></div>
-          </li>
-          <li>
-            <div className='city'>Split, Croatia</div>
-            <div className='cancel-btn'></div>
-          </li>
+        <ul className='city-container'>
+          {cities.map((city) => (
+            <li className='city-item' key={city.id}>
+              <div className='city'>{city.name}</div>
+              <div
+                className='cancel-btn'
+                onClick={() => deleteCity(city.id)}
+              ></div>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
@@ -95,13 +129,15 @@ const WeatherContainer = ({ city }) => {
 const mapStateToProps = (state, ownProps) => {
   return {
     city: state.locationReducer.city,
+    cities: state.locationReducer.cities,
   };
 };
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     selectRestaurant: bindActionCreators(selectRestaurant, dispatch),
-//   };
-// };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addCity: bindActionCreators(addCity, dispatch),
+    deleteCity: bindActionCreators(deleteCity, dispatch),
+  };
+};
 
-export default connect(mapStateToProps, null)(WeatherContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(WeatherContainer);
