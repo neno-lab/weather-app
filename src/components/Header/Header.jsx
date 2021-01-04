@@ -11,8 +11,8 @@ const Header = () => {
 
   return (
     <>
-      <div className='weather-container'>
-        <p className='weather-app'>Weather app</p>
+      <div className='header-container'>
+        <p className='weather-app-title'>Weather app</p>
         <button className='plus-btn' onClick={onClick}></button>
       </div>
       <AddLocation open={isOpen} onClose={() => setIsOpen(false)} />

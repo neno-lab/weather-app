@@ -1,6 +1,6 @@
 @import '../../root-colors.scss';
 
-.weather-container {
+.header-container {
   margin-right: 145px;
   margin-left: 145px;
   height: 60px;
@@ -9,7 +9,7 @@
   justify-content: space-between;
   z-index: 1;
   position: relative;
-  .weather-app {
+  .weather-app-title {
     font-size: 40px;
     font-weight: 600;
     font-stretch: normal;

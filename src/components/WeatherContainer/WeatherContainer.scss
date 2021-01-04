@@ -1,0 +1,169 @@
+@import '../../root-colors.scss';
+
+.weather-container {
+  margin-right: 145px;
+  margin-left: 145px;
+  height: 471px;
+  margin-top: 85px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  z-index: 1;
+  position: relative;
+
+  .details-container {
+    width: 749px;
+    height: 100%;
+    background-image: $gradient;
+    border-radius: 40px;
+
+    .top-details {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: none;
+
+      .degree-location {
+        background: none;
+        .degree {
+          font-size: 90px;
+          font-weight: normal;
+          font-stretch: normal;
+          font-style: normal;
+          line-height: normal;
+          letter-spacing: normal;
+          color: $neutral;
+          background: none;
+          margin-top: 30px;
+          margin-left: 45px;
+        }
+
+        .location {
+          background: none;
+          font-size: 40px;
+          font-weight: 600;
+          font-stretch: normal;
+          font-style: normal;
+          line-height: normal;
+          letter-spacing: normal;
+          color: $neutral;
+          margin-top: -22px;
+        }
+      }
+
+      .weather-image {
+        border: none;
+        background-image: url('../../assets/small.svg') !important;
+        background-repeat: no-repeat;
+        width: 125px;
+        height: 125px;
+        background: none;
+        margin-top: 10px;
+        margin-right: 35px;
+      }
+    }
+
+    .middle-details {
+      background: none;
+      float: left;
+      margin: 149px 628px 105px 45px;
+      font-size: 17px;
+      font-weight: 600;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1;
+      letter-spacing: normal;
+      color: $neutral;
+
+      p {
+        background: none;
+      }
+    }
+
+    .bottom-details {
+      background: none;
+
+      // .days,
+      // .sunrise-sunset,
+      // .sunrise,
+      // .sunset,
+      // p {
+      //   background: none;
+      // }
+    }
+  }
+
+  .favorites-container {
+    width: 360px;
+    height: 100%;
+    border-radius: 40px;
+    background-color: $primaryLight;
+
+    .favorite-city-title {
+      background: none;
+      margin-left: -25px;
+      margin-top: 32px;
+      margin-right: 110px;
+      margin-bottom: 22px;
+      font-size: 26px;
+      font-weight: 600;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      color: $neutral;
+    }
+
+    ul {
+      background: none;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        border-radius: 15px;
+        width: 330px;
+        height: 48px;
+        font-size: 18px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        color: $neutral;
+        background-color: $primaryLight;
+
+        &:hover {
+          background-color: $primaryLightLight;
+        }
+
+        &:focus {
+          background-color: $secondary;
+        }
+
+        .city {
+          background: none;
+          padding-left: 15px;
+        }
+
+        .cancel-btn {
+          cursor: pointer;
+          border: none;
+          margin-right: 15px;
+          background-image: url('../../assets/x.svg') !important;
+          background-repeat: no-repeat;
+          width: 30px;
+          height: 30px;
+          background: none;
+        }
+      }
+    }
+  }
+}
