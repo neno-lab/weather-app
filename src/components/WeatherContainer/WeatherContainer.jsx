@@ -1,7 +1,35 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import './WeatherContainer.scss';
 
-const WeatherContainer = () => {
+const WeatherContainer = ({ city }) => {
+  const API_KEY = 'e36ca5c9259a10df068bc915c2f2b4a4';
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const getCity = await axios.get(
+          `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`
+        );
+        console.log(getCity);
+        const latLon = {
+          lat: getCity.data.coord.lat,
+          lon: getCity.data.coord.lon,
+        };
+        console.log(latLon);
+        const getWeather = await axios.get(
+          `https://api.openweathermap.org/data/2.5/onecall?lat=${latLon.lat}&lon=${latLon.lon}&appid=${API_KEY}`
+        );
+        console.log(getWeather);
+      } catch (err) {
+        console.error(err.message);
+      }
+    };
+    fetchData();
+  }, [city]);
+
   return (
     <div className='weather-container'>
       <div className='details-container'>
@@ -64,4 +92,16 @@ const WeatherContainer = () => {
   );
 };
 
-export default WeatherContainer;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    city: state.locationReducer.city,
+  };
+};
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     selectRestaurant: bindActionCreators(selectRestaurant, dispatch),
+//   };
+// };
+
+export default connect(mapStateToProps, null)(WeatherContainer);
