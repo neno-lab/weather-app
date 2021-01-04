@@ -66,31 +66,114 @@
 
     .middle-details {
       background: none;
-      float: left;
-      margin: 149px 628px 105px 45px;
-      font-size: 17px;
-      font-weight: 600;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1;
-      letter-spacing: normal;
-      color: $neutral;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      flex-direction: column;
+      margin-top: 149px;
+      margin-left: 45px;
+      margin-right: 628px;
 
-      p {
+      .min,
+      .max {
         background: none;
+        font-size: 17px;
+        font-weight: 600;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1;
+        letter-spacing: normal;
+        color: $neutral;
       }
     }
 
     .bottom-details {
       background: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
-      // .days,
-      // .sunrise-sunset,
-      // .sunrise,
-      // .sunset,
-      // p {
-      //   background: none;
-      // }
+      .days {
+        background: none;
+        margin-left: 45px;
+        margin-top: 15px;
+        margin-bottom: 45px;
+
+        .days-title {
+          background: none;
+        }
+      }
+    }
+
+    .sunrise-sunset {
+      background: none;
+      display: flex;
+
+      .sunrise {
+        background: none;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-direction: column;
+        background: none;
+        margin-right: 31px;
+        margin-bottom: 47px;
+
+        .sunrise-title {
+          background: none;
+          font-size: 17px;
+          font-weight: normal;
+          font-stretch: normal;
+          font-style: normal;
+          line-height: normal;
+          letter-spacing: normal;
+          color: $neutral;
+        }
+
+        .sunrise-details {
+          background: none;
+          font-size: 24px;
+          font-weight: 600;
+          font-stretch: normal;
+          font-style: normal;
+          line-height: normal;
+          letter-spacing: normal;
+          color: $neutral;
+        }
+      }
+
+      .sunset {
+        background: none;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-direction: column;
+        background: none;
+        margin-right: 47px;
+        margin-bottom: 47px;
+
+        .sunset-title {
+          background: none;
+          font-size: 17px;
+          font-weight: normal;
+          font-stretch: normal;
+          font-style: normal;
+          line-height: normal;
+          letter-spacing: normal;
+          color: $neutral;
+        }
+
+        .sunset-details {
+          background: none;
+          font-size: 24px;
+          font-weight: 600;
+          font-stretch: normal;
+          font-style: normal;
+          line-height: normal;
+          letter-spacing: normal;
+          color: $neutral;
+        }
+      }
     }
   }
 

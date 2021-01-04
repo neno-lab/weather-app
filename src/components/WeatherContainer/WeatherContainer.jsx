@@ -18,20 +18,23 @@ const WeatherContainer = () => {
           <p className='max'>Max. 25&deg;</p>
         </div>
 
-        {/* <div className='bottom-details'>
-          <div className='days'><p>today, tomorrow, wednesday</p></div>
+        <div className='bottom-details'>
+          <div className='days'>
+            <p className='days-title'>today, tomorrow, wednesday</p>
+          </div>
           <div className='sunrise-sunset'>
             <div className='sunrise'>
-              <p>Sunrise</p>
-              <p>At 6:30am</p>
+              <p className='sunrise-title'>SUNRISE</p>
+              <p className='sunrise-details'>At 6:30am</p>
             </div>
             <div className='sunset'>
-              <p>Sunset</p>
-              <p>At 7:21pm</p>
+              <p className='sunset-title'>SUNSET</p>
+              <p className='sunset-details'>At 7:21pm</p>
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
+
       <div className='favorites-container'>
         <p className='favorite-city-title'>Favorite city</p>
         <ul>
