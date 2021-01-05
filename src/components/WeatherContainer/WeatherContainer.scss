@@ -119,10 +119,11 @@
             background-color: #ffffff4d;
           }
 
-          &:focus {
-            background-color: $neutral;
-            color: $primaryDark;
-          }
+          // &:focus {
+          //   background-color: $neutral;
+          //   color: $primaryDark;
+          //   outline: none;
+          // }
 
           .days-title {
             background: none;
@@ -137,6 +138,13 @@
             padding-bottom: 9px;
             padding-right: 10px;
             padding-left: 10px;
+
+            &:focus {
+              background-color: $neutral;
+              color: $primaryDark;
+              outline: none;
+              border-radius: 15px;
+            }
           }
         }
       }
@@ -266,6 +274,7 @@
 
         &:focus {
           background-color: $secondary;
+          outline: none;
         }
 
         .city {

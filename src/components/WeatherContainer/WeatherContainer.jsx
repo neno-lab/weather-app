@@ -3,9 +3,20 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import './WeatherContainer.scss';
-import { addCity, deleteCity } from '../../redux/actions/locationActions';
+import {
+  addCity,
+  deleteCity,
+  favoriteCityWeather,
+} from '../../redux/actions/locationActions';
 
-const WeatherContainer = ({ city, cities, addCity, deleteCity }) => {
+const WeatherContainer = ({
+  city,
+  cities,
+  addCity,
+  deleteCity,
+  favoriteCityWeather,
+  favoriteCity,
+}) => {
   const API_KEY = 'e36ca5c9259a10df068bc915c2f2b4a4';
 
   useEffect(() => {
@@ -14,7 +25,7 @@ const WeatherContainer = ({ city, cities, addCity, deleteCity }) => {
         const getCity = await axios.get(
           `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`
         );
-        addCity(getCity.data);
+
         console.log('get: ', getCity);
         const latLon = {
           lat: getCity.data.coord.lat,
@@ -25,6 +36,13 @@ const WeatherContainer = ({ city, cities, addCity, deleteCity }) => {
           `https://api.openweathermap.org/data/2.5/onecall?lat=${latLon.lat}&lon=${latLon.lon}&appid=${API_KEY}`
         );
         console.log(getWeather);
+
+        let cityProps = {
+          id: getCity.data.id,
+          name: getCity.data.name,
+          daily: getWeather.data.daily.slice(0, 3),
+        };
+        addCity(cityProps);
       } catch (err) {
         console.error(err.message);
       }
@@ -42,13 +60,13 @@ const WeatherContainer = ({ city, cities, addCity, deleteCity }) => {
   const calculateSunrise = (sunrise) => {
     let date = new Date(sunrise * 1000);
     let hours = date.getHours();
-    let minutes = '0' + date.getMinutes();
+    let minutes = date.getMinutes();
 
     let amPm = hours >= 12 ? 'pm' : 'am';
     hours = hours % 12;
     hours = hours ? hours : 12;
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-    let formattedTime = 'At' + hours + ':' + minutes + amPm;
+    minutes = minutes < 10 ? minutes : minutes;
+    let formattedTime = 'At ' + hours + ':' + minutes + amPm;
 
     return formattedTime;
   };
@@ -56,15 +74,21 @@ const WeatherContainer = ({ city, cities, addCity, deleteCity }) => {
   const calculateSunset = (sunset) => {
     let date = new Date(sunset * 1000);
     let hours = date.getHours();
-    let minutes = '0' + date.getMinutes();
+    let minutes = date.getMinutes();
 
     let amPm = hours >= 12 ? 'pm' : 'am';
     hours = hours % 12;
     hours = hours ? hours : 12;
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-    let formattedTime = 'At' + hours + ':' + minutes + amPm;
+    minutes = minutes < 10 ? minutes : minutes;
+    let formattedTime = 'At ' + hours + ':' + minutes + amPm;
 
     return formattedTime;
+  };
+
+  const favoriteSubmit = (e, city) => {
+    e.preventDefault();
+    console.log('clicked!');
+    favoriteCityWeather(city);
   };
 
   return (
@@ -72,37 +96,53 @@ const WeatherContainer = ({ city, cities, addCity, deleteCity }) => {
       <div className='details-container'>
         <div className='top-details'>
           <div className='degree-location'>
-            <div className='degree'>24&deg;</div>
+            <div className='degree'>
+              {calculateAverageTemp(favoriteCity.temp)}&deg;
+            </div>
             <div className='location'>Split</div>
           </div>
           <div className='weather-image'></div>
         </div>
 
         <div className='middle-details'>
-          <p className='min'>Min. -10&deg;</p>
-          <p className='max'>Max. 25&deg;</p>
+          <p className='min'>
+            Min. {(favoriteCity.temp.min - 273).toFixed(0)}&deg;
+          </p>
+          <p className='max'>
+            Max. {(favoriteCity.temp.max - 273).toFixed(0)}&deg;
+          </p>
         </div>
 
         <div className='bottom-details'>
           <ul className='days-container'>
             <li className='days-item'>
-              <p className='days-title'>Today</p>
+              <p className='days-title' tabIndex='1'>
+                Today
+              </p>
             </li>
             <li className='days-item'>
-              <p className='days-title'>Tomorrow</p>
+              <p className='days-title' tabIndex='1'>
+                Tomorrow
+              </p>
             </li>
             <li className='days-item'>
-              <p className='days-title'>Wednesday</p>
+              <p className='days-title' tabIndex='1'>
+                Wednesday
+              </p>
             </li>
           </ul>
           <div className='sunrise-sunset'>
             <div className='sunrise'>
               <p className='sunrise-title'>SUNRISE</p>
-              <p className='sunrise-details'>At 6:30am</p>
+              <p className='sunrise-details'>
+                {calculateSunrise(favoriteCity.sunrise)}
+              </p>
             </div>
             <div className='sunset'>
               <p className='sunset-title'>SUNSET</p>
-              <p className='sunset-details'>At 7:21pm</p>
+              <p className='sunset-details'>
+                {calculateSunset(favoriteCity.sunset)}
+              </p>
             </div>
           </div>
         </div>
@@ -112,7 +152,12 @@ const WeatherContainer = ({ city, cities, addCity, deleteCity }) => {
         <p className='favorite-city-title'>Favorite city</p>
         <ul className='city-container'>
           {cities.map((city) => (
-            <li className='city-item' key={city.id}>
+            <li
+              className='city-item'
+              key={city.id}
+              tabIndex='1'
+              onClick={(e) => favoriteSubmit(e, city)}
+            >
               <div className='city'>{city.name}</div>
               <div
                 className='cancel-btn'
@@ -130,6 +175,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     city: state.locationReducer.city,
     cities: state.locationReducer.cities,
+    favoriteCity: state.locationReducer.favoriteCity,
   };
 };
 
@@ -137,6 +183,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addCity: bindActionCreators(addCity, dispatch),
     deleteCity: bindActionCreators(deleteCity, dispatch),
+    favoriteCityWeather: bindActionCreators(favoriteCityWeather, dispatch),
   };
 };
 
