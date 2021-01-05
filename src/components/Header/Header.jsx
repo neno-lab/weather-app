@@ -9,27 +9,6 @@ const Header = () => {
     setIsOpen(true);
   };
 
-  const arr = [
-    {
-      id: 1,
-      name: 'a',
-      daily: 'aa',
-    },
-    {
-      id: 2,
-      name: 'b',
-      daily: 'bb',
-    },
-    {
-      id: 3,
-      name: 'c',
-      daily: 'cc',
-    },
-  ];
-
-  const found = arr.find((item) => item.id === 1);
-  console.log(found);
-
   return (
     <>
       <div className='header-container'>
