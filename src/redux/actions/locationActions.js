@@ -6,7 +6,7 @@ import {
 } from './locationTypes';
 
 export const addCityToUrl = (location) => {
-  console.log('akcija: ', location.city);
+  // console.log('akcija: ', location.city);
   return {
     type: ADD_CITY_TO_URL,
     payload: location.city,

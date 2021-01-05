@@ -14,13 +14,14 @@ const initialState = {
 const locationReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_CITY_TO_URL:
-      console.log('moj grad: ', action.payload.replace(/\s/g, '%20'));
+      // console.log('moj grad: ', action.payload.replace(/\s/g, '%20'));
       return {
         ...state,
         city: action.payload.replace(/\s/g, '%20'),
       };
 
     case ADD_CITY:
+      console.log('added: ', action.payload);
       return {
         ...state,
         cities: [...state.cities, action.payload],
@@ -33,10 +34,10 @@ const locationReducer = (state = initialState, action) => {
       };
 
     case FAVORITE_CITY_WEATHER:
-      console.log('daily: ', action.payload.daily[0]);
+      console.log('choosen: ', action.payload);
       return {
         ...state,
-        favoriteCity: action.payload.daily[0],
+        favoriteCity: action.payload,
       };
     default:
       return state;

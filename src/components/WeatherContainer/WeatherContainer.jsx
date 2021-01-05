@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -85,10 +85,23 @@ const WeatherContainer = ({
     return formattedTime;
   };
 
+  const [isFavoriteCity, setIsFavoriteCity] = useState(false);
+  const [isToday, setIsToday] = useState(false);
+
   const favoriteSubmit = (e, city) => {
     e.preventDefault();
     console.log('clicked!');
+    // console.log(city);
     favoriteCityWeather(city);
+    setIsFavoriteCity(true);
+    setIsToday(false);
+    console.log('city: ', city);
+  };
+
+  const todaySubmit = (e) => {
+    e.preventDefault();
+    setIsToday(true);
+    setIsFavoriteCity(false);
   };
 
   return (
@@ -97,7 +110,8 @@ const WeatherContainer = ({
         <div className='top-details'>
           <div className='degree-location'>
             <div className='degree'>
-              {calculateAverageTemp(favoriteCity.temp)}&deg;
+              {isFavoriteCity && favoriteCity.id}
+              {isToday && favoriteCity.name}
             </div>
             <div className='location'>Split</div>
           </div>
@@ -106,17 +120,23 @@ const WeatherContainer = ({
 
         <div className='middle-details'>
           <p className='min'>
-            Min. {(favoriteCity.temp.min - 273).toFixed(0)}&deg;
+            Min.
+            {/* Min. {(favoriteCity.temp.min - 273).toFixed(0)}&deg; */}
           </p>
           <p className='max'>
-            Max. {(favoriteCity.temp.max - 273).toFixed(0)}&deg;
+            Max.
+            {/* Max. {(favoriteCity.temp.max - 273).toFixed(0)}&deg; */}
           </p>
         </div>
 
         <div className='bottom-details'>
           <ul className='days-container'>
             <li className='days-item'>
-              <p className='days-title' tabIndex='1'>
+              <p
+                className='days-title'
+                tabIndex='1'
+                onClick={(e) => todaySubmit(e)}
+              >
                 Today
               </p>
             </li>
@@ -135,13 +155,13 @@ const WeatherContainer = ({
             <div className='sunrise'>
               <p className='sunrise-title'>SUNRISE</p>
               <p className='sunrise-details'>
-                {calculateSunrise(favoriteCity.sunrise)}
+                {/* {calculateSunrise(favoriteCity.sunrise)} */}
               </p>
             </div>
             <div className='sunset'>
               <p className='sunset-title'>SUNSET</p>
               <p className='sunset-details'>
-                {calculateSunset(favoriteCity.sunset)}
+                {/* {calculateSunset(favoriteCity.sunset)} */}
               </p>
             </div>
           </div>
