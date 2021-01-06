@@ -17,8 +17,6 @@ const WeatherContainer = ({
   favoriteCityWeather,
   favoriteCity,
 }) => {
-  //console.log('env: ', process.env.REACT_APP_API_KEY);
-
   useEffect(() => {
     const API_KEY = process.env.REACT_APP_API_KEY;
 
@@ -53,6 +51,9 @@ const WeatherContainer = ({
   }, [city, addCity]);
 
   const calculateAverageTemp = (temp) => {
+    if (temp === undefined) {
+      return '';
+    }
     let averageTemp = (temp.morn + temp.day + temp.eve + temp.night) / 4 - 273;
     let rounded = averageTemp.toFixed(1);
 
@@ -88,6 +89,7 @@ const WeatherContainer = ({
   };
 
   const [isSearched, setIsSearched] = useState(true);
+  const [isDeleted, setIsDeleted] = useState(false);
   const [isFavoriteCity, setIsFavoriteCity] = useState(false);
   const [isToday, setIsToday] = useState(false);
   const [isTomorrow, setIsTomorrow] = useState(false);
@@ -109,188 +111,218 @@ const WeatherContainer = ({
     return today;
   };
 
-  const favoriteSubmit = (e, city) => {
-    e.preventDefault();
+  const favoriteSubmit = (city) => {
     favoriteCityWeather(city);
     setIsSearched(false);
+    setIsDeleted(false);
     setIsFavoriteCity(true);
     setIsToday(false);
     setIsTomorrow(false);
     setIsDayAfterTomorrow(false);
   };
 
-  const todaySubmit = (e) => {
-    e.preventDefault();
+  const todaySubmit = () => {
     setIsSearched(false);
+    setIsDeleted(false);
     setIsFavoriteCity(false);
     setIsToday(true);
     setIsTomorrow(false);
     setIsDayAfterTomorrow(false);
   };
 
-  const tomorrowSubmit = (e) => {
-    e.preventDefault();
+  const tomorrowSubmit = () => {
     setIsSearched(false);
+    setIsDeleted(false);
     setIsFavoriteCity(false);
     setIsToday(false);
     setIsTomorrow(true);
     setIsDayAfterTomorrow(false);
   };
 
-  const dayAfterTomorrowSubmit = (e) => {
-    e.preventDefault();
+  const dayAfterTomorrowSubmit = () => {
     setIsSearched(false);
+    setIsDeleted(false);
     setIsFavoriteCity(false);
     setIsToday(false);
     setIsTomorrow(false);
     setIsDayAfterTomorrow(true);
   };
 
-  console.log('cities: ', cities);
+  const handleDelete = (e, city) => {
+    e.stopPropagation();
+    setIsSearched(false);
+    setIsDeleted(true);
+    setIsFavoriteCity(false);
+    setIsToday(false);
+    setIsTomorrow(false);
+    setIsDayAfterTomorrow(false);
+    deleteCity(city);
+    // favoriteCityWeather({ id: '', name: '', daily: [{ temp: undefined }] });
+  };
 
   return (
-    <div className='weather-container'>
-      <div className='details-container'>
-        <div className='top-details'>
-          <div className='degree-location'>
-            <div className='degree'>
-              {/* {isSearched && cities[cities.length - 1].id} */}
+    <>
+      <div className='heart-img'></div>
+      <div className='weather-container'>
+        <div className='details-container'>
+          <div className='top-details'>
+            <div className='degree-location'>
+              <div className='degree'>
+                {isDeleted && ''}
+                {(isFavoriteCity || isToday) &&
+                  calculateAverageTemp(favoriteCity.daily[0].temp)}
+                {isTomorrow && calculateAverageTemp(favoriteCity.daily[1].temp)}
+                {isDayAfterTomorrow &&
+                  calculateAverageTemp(favoriteCity.daily[2].temp)}
+                &deg;
+              </div>
+              <div className='location'>
+                {isDeleted && ''}
+                {(isFavoriteCity ||
+                  isToday ||
+                  isTomorrow ||
+                  isDayAfterTomorrow) &&
+                  favoriteCity.name}
+              </div>
+            </div>
+            <div className='weather-image'>
+              {isDeleted && ''}
+              {(isFavoriteCity || isToday) && (
+                <img
+                  src={`http://openweathermap.org/img/wn/${favoriteCity.daily[0].weather[0].icon}.png`}
+                  alt={`${favoriteCity.daily[0].weather[0].icon}`}
+                  style={{
+                    width: '125px',
+                    height: '125px',
+                    background: 'none',
+                  }}
+                />
+              )}
+              {isTomorrow && (
+                <img
+                  src={`http://openweathermap.org/img/wn/${favoriteCity.daily[1].weather[0].icon}.png`}
+                  alt={`${favoriteCity.daily[1].weather[0].icon}`}
+                  style={{
+                    width: '125px',
+                    height: '125px',
+                    background: 'none',
+                  }}
+                />
+              )}
+              {isDayAfterTomorrow && (
+                <img
+                  src={`http://openweathermap.org/img/wn/${favoriteCity.daily[2].weather[0].icon}.png`}
+                  alt={`${favoriteCity.daily[2].weather[0].icon}`}
+                  style={{
+                    width: '125px',
+                    height: '125px',
+                    background: 'none',
+                  }}
+                />
+              )}
+            </div>
+          </div>
+
+          <div className='middle-details'>
+            <p className='min'>
+              Min. {isDeleted && ''}
               {(isFavoriteCity || isToday) &&
-                calculateAverageTemp(favoriteCity.daily[0].temp)}
-              {isTomorrow && calculateAverageTemp(favoriteCity.daily[1].temp)}
+                (favoriteCity.daily[0].temp.min - 273).toFixed(0)}
+              {isTomorrow && (favoriteCity.daily[1].temp.min - 273).toFixed(0)}
               {isDayAfterTomorrow &&
-                calculateAverageTemp(favoriteCity.daily[2].temp)}
+                (favoriteCity.daily[2].temp.min - 273).toFixed(0)}
               &deg;
-            </div>
-            <div className='location'>
-              {(isFavoriteCity ||
-                isToday ||
-                isTomorrow ||
-                isDayAfterTomorrow) &&
-                favoriteCity.name}
-            </div>
+            </p>
+            <p className='max'>
+              Max. {isDeleted && ''}
+              {(isFavoriteCity || isToday) &&
+                (favoriteCity.daily[0].temp.max - 273).toFixed(0)}
+              {isTomorrow && (favoriteCity.daily[1].temp.max - 273).toFixed(0)}
+              {isDayAfterTomorrow &&
+                (favoriteCity.daily[2].temp.max - 273).toFixed(0)}
+              &deg;
+            </p>
           </div>
-          <div className='weather-image'>
-            {(isFavoriteCity || isToday) && (
-              <img
-                src={`http://openweathermap.org/img/wn/${favoriteCity.daily[0].weather[0].icon}.png`}
-                alt={`${favoriteCity.daily[0].weather[0].icon}`}
-                style={{ width: '125px', height: '125px', background: 'none' }}
-              />
-            )}
-            {isTomorrow && (
-              <img
-                src={`http://openweathermap.org/img/wn/${favoriteCity.daily[1].weather[0].icon}.png`}
-                alt={`${favoriteCity.daily[1].weather[0].icon}`}
-                style={{ width: '125px', height: '125px', background: 'none' }}
-              />
-            )}
-            {isDayAfterTomorrow && (
-              <img
-                src={`http://openweathermap.org/img/wn/${favoriteCity.daily[2].weather[0].icon}.png`}
-                alt={`${favoriteCity.daily[2].weather[0].icon}`}
-                style={{ width: '125px', height: '125px', background: 'none' }}
-              />
-            )}
+
+          <div className='bottom-details'>
+            <ul className='days-container'>
+              <li className='days-item'>
+                <p
+                  className='days-title'
+                  tabIndex='1'
+                  onClick={() => todaySubmit()}
+                >
+                  Today
+                </p>
+              </li>
+              <li className='days-item'>
+                <p
+                  className='days-title'
+                  tabIndex='1'
+                  onClick={() => tomorrowSubmit()}
+                >
+                  Tomorrow
+                </p>
+              </li>
+              <li className='days-item'>
+                <p
+                  className='days-title'
+                  tabIndex='1'
+                  onClick={() => dayAfterTomorrowSubmit()}
+                >
+                  {todaysDay()}
+                </p>
+              </li>
+            </ul>
+            <div className='sunrise-sunset'>
+              <div className='sunrise'>
+                <p className='sunrise-title'>SUNRISE</p>
+                <p className='sunrise-details'>
+                  {isDeleted && ''}
+                  {(isFavoriteCity || isToday) &&
+                    calculateSunrise(favoriteCity.daily[0].sunrise)}
+                  {isTomorrow &&
+                    calculateSunrise(favoriteCity.daily[1].sunrise)}
+                  {isDayAfterTomorrow &&
+                    calculateSunrise(favoriteCity.daily[2].sunrise)}
+                </p>
+              </div>
+              <div className='sunset'>
+                <p className='sunset-title'>SUNSET</p>
+                <p className='sunset-details'>
+                  {isDeleted && ''}
+                  {(isFavoriteCity || isToday) &&
+                    calculateSunset(favoriteCity.daily[0].sunset)}
+                  {isTomorrow && calculateSunset(favoriteCity.daily[1].sunset)}
+                  {isDayAfterTomorrow &&
+                    calculateSunset(favoriteCity.daily[2].sunset)}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className='middle-details'>
-          <p className='min'>
-            Min.{' '}
-            {(isFavoriteCity || isToday) &&
-              (favoriteCity.daily[0].temp.min - 273).toFixed(0)}
-            {isTomorrow && (favoriteCity.daily[1].temp.min - 273).toFixed(0)}
-            {isDayAfterTomorrow &&
-              (favoriteCity.daily[2].temp.min - 273).toFixed(0)}
-            &deg;
-          </p>
-          <p className='max'>
-            Max.{' '}
-            {(isFavoriteCity || isToday) &&
-              (favoriteCity.daily[0].temp.max - 273).toFixed(0)}
-            {isTomorrow && (favoriteCity.daily[1].temp.max - 273).toFixed(0)}
-            {isDayAfterTomorrow &&
-              (favoriteCity.daily[2].temp.max - 273).toFixed(0)}
-            &deg;
-          </p>
-        </div>
-
-        <div className='bottom-details'>
-          <ul className='days-container'>
-            <li className='days-item'>
-              <p
-                className='days-title'
+        <div className='favorites-container'>
+          <p className='favorite-city-title'>Favorite city</p>
+          <ul className='city-container'>
+            {cities.map((city) => (
+              <li
+                className='city-item'
+                key={city.id}
                 tabIndex='1'
-                onClick={(e) => todaySubmit(e)}
+                onClick={() => favoriteSubmit(city)}
               >
-                Today
-              </p>
-            </li>
-            <li className='days-item'>
-              <p
-                className='days-title'
-                tabIndex='1'
-                onClick={(e) => tomorrowSubmit(e)}
-              >
-                Tomorrow
-              </p>
-            </li>
-            <li className='days-item'>
-              <p
-                className='days-title'
-                tabIndex='1'
-                onClick={(e) => dayAfterTomorrowSubmit(e)}
-              >
-                {todaysDay()}
-              </p>
-            </li>
+                <div className='city'>{city.name}</div>
+                <div
+                  className='cancel-btn'
+                  onClick={(e) => handleDelete(e, city.id)}
+                ></div>
+              </li>
+            ))}
           </ul>
-          <div className='sunrise-sunset'>
-            <div className='sunrise'>
-              <p className='sunrise-title'>SUNRISE</p>
-              <p className='sunrise-details'>
-                {(isFavoriteCity || isToday) &&
-                  calculateSunrise(favoriteCity.daily[0].sunrise)}
-                {isTomorrow && calculateSunrise(favoriteCity.daily[1].sunrise)}
-                {isDayAfterTomorrow &&
-                  calculateSunrise(favoriteCity.daily[2].sunrise)}
-              </p>
-            </div>
-            <div className='sunset'>
-              <p className='sunset-title'>SUNSET</p>
-              <p className='sunset-details'>
-                {(isFavoriteCity || isToday) &&
-                  calculateSunset(favoriteCity.daily[0].sunset)}
-                {isTomorrow && calculateSunset(favoriteCity.daily[1].sunset)}
-                {isDayAfterTomorrow &&
-                  calculateSunset(favoriteCity.daily[2].sunset)}
-              </p>
-            </div>
-          </div>
         </div>
       </div>
-
-      <div className='favorites-container'>
-        <p className='favorite-city-title'>Favorite city</p>
-        <ul className='city-container'>
-          {cities.map((city) => (
-            <li
-              className='city-item'
-              key={city.id}
-              tabIndex='1'
-              onClick={(e) => favoriteSubmit(e, city)}
-            >
-              <div className='city'>{city.name}</div>
-              <div
-                className='cancel-btn'
-                onClick={() => deleteCity(city.id)}
-              ></div>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+    </>
   );
 };
 

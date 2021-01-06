@@ -54,3 +54,31 @@
     }
   }
 }
+
+@media (max-width: 500px) {
+  .default-container {
+    margin-right: 20px;
+    margin-left: 20px;
+    height: 471px;
+    margin-top: 41px;
+    .default-text {
+      h3 {
+        font-size: 17px;
+        padding-right: 15px;
+        padding-left: 15px;
+      }
+      p {
+        font-size: 14px;
+        padding-top: 10px;
+        padding-top: 10px;
+        padding-right: 18px;
+        padding-left: 18px;
+      }
+      button {
+        margin: 25px 30px 35px 30px;
+        width: 316px;
+        height: 60px;
+      }
+    }
+  }
+}
