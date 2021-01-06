@@ -4,6 +4,8 @@ import Home from './routes/Home';
 import WeatherDetailPage from './routes/WeatherDetailPage';
 import './App.scss';
 
+//const dotenv = require('dotenv').config();
+
 const App = () => {
   return (
     <Router>

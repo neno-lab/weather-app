@@ -17,9 +17,11 @@ const WeatherContainer = ({
   favoriteCityWeather,
   favoriteCity,
 }) => {
-  const API_KEY = 'e36ca5c9259a10df068bc915c2f2b4a4';
+  //console.log('env: ', process.env.REACT_APP_API_KEY);
 
   useEffect(() => {
+    const API_KEY = process.env.REACT_APP_API_KEY;
+
     const fetchData = async () => {
       try {
         const getCity = await axios.get(
@@ -168,7 +170,29 @@ const WeatherContainer = ({
                 favoriteCity.name}
             </div>
           </div>
-          <div className='weather-image'></div>
+          <div className='weather-image'>
+            {(isFavoriteCity || isToday) && (
+              <img
+                src={`http://openweathermap.org/img/wn/${favoriteCity.daily[0].weather[0].icon}.png`}
+                alt={`${favoriteCity.daily[0].weather[0].icon}`}
+                style={{ width: '125px', height: '125px', background: 'none' }}
+              />
+            )}
+            {isTomorrow && (
+              <img
+                src={`http://openweathermap.org/img/wn/${favoriteCity.daily[1].weather[0].icon}.png`}
+                alt={`${favoriteCity.daily[1].weather[0].icon}`}
+                style={{ width: '125px', height: '125px', background: 'none' }}
+              />
+            )}
+            {isDayAfterTomorrow && (
+              <img
+                src={`http://openweathermap.org/img/wn/${favoriteCity.daily[2].weather[0].icon}.png`}
+                alt={`${favoriteCity.daily[2].weather[0].icon}`}
+                style={{ width: '125px', height: '125px', background: 'none' }}
+              />
+            )}
+          </div>
         </div>
 
         <div className='middle-details'>
