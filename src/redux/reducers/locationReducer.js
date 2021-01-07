@@ -14,7 +14,6 @@ const initialState = {
 const locationReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_CITY_TO_URL:
-      // console.log('moj grad: ', action.payload.replace(/\s/g, '%20'));
       return {
         ...state,
         city: action.payload.replace(/\s/g, '%20'),

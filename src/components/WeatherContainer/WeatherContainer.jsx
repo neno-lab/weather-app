@@ -1,59 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import './WeatherContainer.scss';
 import {
-  addCity,
   deleteCity,
   favoriteCityWeather,
 } from '../../redux/actions/locationActions';
 
 const WeatherContainer = ({
-  city,
   cities,
-  addCity,
   deleteCity,
   favoriteCityWeather,
   favoriteCity,
 }) => {
-  useEffect(() => {
-    const API_KEY = process.env.REACT_APP_API_KEY;
-
-    const fetchData = async () => {
-      try {
-        const getCity = await axios.get(
-          `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`
-        );
-
-        console.log('get: ', getCity);
-        const latLon = {
-          lat: getCity.data.coord.lat,
-          lon: getCity.data.coord.lon,
-        };
-        console.log(latLon);
-        const getWeather = await axios.get(
-          `https://api.openweathermap.org/data/2.5/onecall?lat=${latLon.lat}&lon=${latLon.lon}&appid=${API_KEY}`
-        );
-        console.log(getWeather);
-
-        let cityProps = {
-          id: getCity.data.id,
-          name: getCity.data.name,
-          daily: getWeather.data.daily.slice(0, 3),
-        };
-        addCity(cityProps);
-      } catch (err) {
-        console.error(err.message);
-      }
-    };
-    fetchData();
-  }, [city, addCity]);
-
   const calculateAverageTemp = (temp) => {
-    if (temp === undefined) {
-      return '';
-    }
     let averageTemp = (temp.morn + temp.day + temp.eve + temp.night) / 4 - 273;
     let rounded = averageTemp.toFixed(1);
 
@@ -88,12 +48,9 @@ const WeatherContainer = ({
     return formattedTime;
   };
 
+  const [index, setIndex] = useState(0);
   const [isSearched, setIsSearched] = useState(true);
-  const [isDeleted, setIsDeleted] = useState(false);
-  const [isFavoriteCity, setIsFavoriteCity] = useState(false);
-  const [isToday, setIsToday] = useState(false);
-  const [isTomorrow, setIsTomorrow] = useState(false);
-  const [isDayAfterTomorrow, setIsDayAfterTomorrow] = useState(false);
+  const [isTriggered, setIsTriggered] = useState(false);
 
   const todaysDay = () => {
     const days = [
@@ -111,54 +68,67 @@ const WeatherContainer = ({
     return today;
   };
 
-  const favoriteSubmit = (city) => {
-    favoriteCityWeather(city);
-    setIsSearched(false);
-    setIsDeleted(false);
-    setIsFavoriteCity(true);
-    setIsToday(false);
-    setIsTomorrow(false);
-    setIsDayAfterTomorrow(false);
+  const searchedCity = () => {
+    setIsTriggered(false);
+    let addedCity = cities[cities.length - 1].daily[0];
+    let todaysTemp = calculateAverageTemp(addedCity.temp);
+    let min = (addedCity.temp.min - 273).toFixed(0);
+    let max = (addedCity.temp.max - 273).toFixed(0);
+    let todaysSunrise = calculateSunrise(addedCity.sunrise);
+    let todaysSunset = calculateSunrise(addedCity.sunset);
+    let img = (
+      <img
+        src={`http://openweathermap.org/img/wn/${addedCity.weather[0].icon}.png`}
+        alt={`${addedCity.weather[0].icon}`}
+        style={{
+          width: '125px',
+          height: '125px',
+          background: 'none',
+        }}
+      />
+    );
+    let newProps = {
+      id: addedCity.id,
+      name: cities[cities.length - 1].name,
+      temp: todaysTemp,
+      min: min,
+      max: max,
+      sunrise: todaysSunrise,
+      sunset: todaysSunset,
+      img: img,
+    };
+
+    console.log('novo', newProps.name);
+    return newProps;
   };
 
-  const todaySubmit = () => {
+  const handleDay = (i) => {
     setIsSearched(false);
-    setIsDeleted(false);
-    setIsFavoriteCity(false);
-    setIsToday(true);
-    setIsTomorrow(false);
-    setIsDayAfterTomorrow(false);
+    setIsTriggered(true);
+    setIndex(i);
   };
-
-  const tomorrowSubmit = () => {
-    setIsSearched(false);
-    setIsDeleted(false);
-    setIsFavoriteCity(false);
-    setIsToday(false);
-    setIsTomorrow(true);
-    setIsDayAfterTomorrow(false);
-  };
-
-  const dayAfterTomorrowSubmit = () => {
-    setIsSearched(false);
-    setIsDeleted(false);
-    setIsFavoriteCity(false);
-    setIsToday(false);
-    setIsTomorrow(false);
-    setIsDayAfterTomorrow(true);
-  };
-
   const handleDelete = (e, city) => {
     e.stopPropagation();
     setIsSearched(false);
-    setIsDeleted(true);
-    setIsFavoriteCity(false);
-    setIsToday(false);
-    setIsTomorrow(false);
-    setIsDayAfterTomorrow(false);
     deleteCity(city);
-    // favoriteCityWeather({ id: '', name: '', daily: [{ temp: undefined }] });
   };
+
+  const handleFavorite = (city) => {
+    setIsSearched(false);
+    // setIsTriggered(true);
+    favoriteCityWeather(city);
+  };
+
+  if (
+    Object.keys(favoriteCity).length === 0 &&
+    favoriteCity.constructor === Object
+  ) {
+    console.log('prazan je');
+  } else {
+    console.log('pun je');
+  }
+
+  console.log('tu', favoriteCity);
 
   return (
     <>
@@ -168,78 +138,37 @@ const WeatherContainer = ({
           <div className='top-details'>
             <div className='degree-location'>
               <div className='degree'>
-                {isDeleted && ''}
-                {(isFavoriteCity || isToday) &&
-                  calculateAverageTemp(favoriteCity.daily[0].temp)}
-                {isTomorrow && calculateAverageTemp(favoriteCity.daily[1].temp)}
-                {isDayAfterTomorrow &&
-                  calculateAverageTemp(favoriteCity.daily[2].temp)}
+                {isSearched && searchedCity().temp}
+                {isTriggered &&
+                Object.keys(favoriteCity).length === 0 &&
+                favoriteCity.constructor === Object
+                  ? calculateAverageTemp(
+                      cities[cities.length - 1].daily[index].temp
+                    )
+                  : calculateAverageTemp(favoriteCity.daily[index].temp)}
                 &deg;
               </div>
               <div className='location'>
-                {isDeleted && ''}
-                {(isFavoriteCity ||
-                  isToday ||
-                  isTomorrow ||
-                  isDayAfterTomorrow) &&
-                  favoriteCity.name}
+                {isSearched && searchedCity().name}
+                {isTriggered &&
+                Object.keys(favoriteCity).length === 0 &&
+                favoriteCity.constructor === Object
+                  ? cities[cities.length - 1].name
+                  : favoriteCity.name}
               </div>
             </div>
             <div className='weather-image'>
-              {isDeleted && ''}
-              {(isFavoriteCity || isToday) && (
-                <img
-                  src={`http://openweathermap.org/img/wn/${favoriteCity.daily[0].weather[0].icon}.png`}
-                  alt={`${favoriteCity.daily[0].weather[0].icon}`}
-                  style={{
-                    width: '125px',
-                    height: '125px',
-                    background: 'none',
-                  }}
-                />
-              )}
-              {isTomorrow && (
-                <img
-                  src={`http://openweathermap.org/img/wn/${favoriteCity.daily[1].weather[0].icon}.png`}
-                  alt={`${favoriteCity.daily[1].weather[0].icon}`}
-                  style={{
-                    width: '125px',
-                    height: '125px',
-                    background: 'none',
-                  }}
-                />
-              )}
-              {isDayAfterTomorrow && (
-                <img
-                  src={`http://openweathermap.org/img/wn/${favoriteCity.daily[2].weather[0].icon}.png`}
-                  alt={`${favoriteCity.daily[2].weather[0].icon}`}
-                  style={{
-                    width: '125px',
-                    height: '125px',
-                    background: 'none',
-                  }}
-                />
-              )}
+              {/* {isSearched && handleSubmit().img} */}
             </div>
           </div>
 
           <div className='middle-details'>
             <p className='min'>
-              Min. {isDeleted && ''}
-              {(isFavoriteCity || isToday) &&
-                (favoriteCity.daily[0].temp.min - 273).toFixed(0)}
-              {isTomorrow && (favoriteCity.daily[1].temp.min - 273).toFixed(0)}
-              {isDayAfterTomorrow &&
-                (favoriteCity.daily[2].temp.min - 273).toFixed(0)}
+              {/* Min. {isSearched && handleSubmit().min} */}
               &deg;
             </p>
             <p className='max'>
-              Max. {isDeleted && ''}
-              {(isFavoriteCity || isToday) &&
-                (favoriteCity.daily[0].temp.max - 273).toFixed(0)}
-              {isTomorrow && (favoriteCity.daily[1].temp.max - 273).toFixed(0)}
-              {isDayAfterTomorrow &&
-                (favoriteCity.daily[2].temp.max - 273).toFixed(0)}
+              {/* Max. {isSearched && handleSubmit().max} */}
               &deg;
             </p>
           </div>
@@ -250,7 +179,7 @@ const WeatherContainer = ({
                 <p
                   className='days-title'
                   tabIndex='1'
-                  onClick={() => todaySubmit()}
+                  onClick={() => handleDay(0)}
                 >
                   Today
                 </p>
@@ -259,7 +188,7 @@ const WeatherContainer = ({
                 <p
                   className='days-title'
                   tabIndex='1'
-                  onClick={() => tomorrowSubmit()}
+                  onClick={() => handleDay(1)}
                 >
                   Tomorrow
                 </p>
@@ -268,7 +197,7 @@ const WeatherContainer = ({
                 <p
                   className='days-title'
                   tabIndex='1'
-                  onClick={() => dayAfterTomorrowSubmit()}
+                  onClick={() => handleDay(2)}
                 >
                   {todaysDay()}
                 </p>
@@ -278,24 +207,13 @@ const WeatherContainer = ({
               <div className='sunrise'>
                 <p className='sunrise-title'>SUNRISE</p>
                 <p className='sunrise-details'>
-                  {isDeleted && ''}
-                  {(isFavoriteCity || isToday) &&
-                    calculateSunrise(favoriteCity.daily[0].sunrise)}
-                  {isTomorrow &&
-                    calculateSunrise(favoriteCity.daily[1].sunrise)}
-                  {isDayAfterTomorrow &&
-                    calculateSunrise(favoriteCity.daily[2].sunrise)}
+                  {/* {isSearched && handleSubmit().sunrise} */}
                 </p>
               </div>
               <div className='sunset'>
                 <p className='sunset-title'>SUNSET</p>
                 <p className='sunset-details'>
-                  {isDeleted && ''}
-                  {(isFavoriteCity || isToday) &&
-                    calculateSunset(favoriteCity.daily[0].sunset)}
-                  {isTomorrow && calculateSunset(favoriteCity.daily[1].sunset)}
-                  {isDayAfterTomorrow &&
-                    calculateSunset(favoriteCity.daily[2].sunset)}
+                  {/* {isSearched && handleSubmit().sunset} */}
                 </p>
               </div>
             </div>
@@ -310,7 +228,7 @@ const WeatherContainer = ({
                 className='city-item'
                 key={city.id}
                 tabIndex='1'
-                onClick={() => favoriteSubmit(city)}
+                onClick={() => handleFavorite(city)}
               >
                 <div className='city'>{city.name}</div>
                 <div
@@ -336,7 +254,6 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addCity: bindActionCreators(addCity, dispatch),
     deleteCity: bindActionCreators(deleteCity, dispatch),
     favoriteCityWeather: bindActionCreators(favoriteCityWeather, dispatch),
   };

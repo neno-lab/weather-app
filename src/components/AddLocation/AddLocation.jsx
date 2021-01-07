@@ -5,20 +5,16 @@ import cities from './cities.json';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import './AddLocation.scss';
-import { useHistory } from 'react-router-dom';
 import { addCityToUrl } from '../../redux/actions/locationActions';
 
 const AddLocation = ({ open, onClose, addCityToUrl }) => {
   const { register, handleSubmit } = useForm();
   const [city, setCity] = useState('');
   const [suggestions, setSuggestions] = useState([]);
-  const history = useHistory();
-
   const onSubmit = (data) => {
     if (!data.city) return;
     console.log('Data: ', data);
     addCityToUrl(data);
-    history.push('/weather');
   };
 
   if (!open) return null;
