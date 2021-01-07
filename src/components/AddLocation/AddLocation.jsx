@@ -5,7 +5,11 @@ import cities from './cities.json';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import './AddLocation.scss';
-import { addCityToUrl } from '../../redux/actions/locationActions';
+import {
+  addCityToUrl,
+  setIsSearched,
+  setIsTriggered,
+} from '../../redux/actions/locationActions';
 
 const AddLocation = ({ open, onClose, addCityToUrl }) => {
   const { register, handleSubmit } = useForm();
@@ -13,8 +17,9 @@ const AddLocation = ({ open, onClose, addCityToUrl }) => {
   const [suggestions, setSuggestions] = useState([]);
   const onSubmit = (data) => {
     if (!data.city) return;
-    console.log('Data: ', data);
+    // console.log('Data: ', data);
     addCityToUrl(data);
+    onClose();
   };
 
   if (!open) return null;

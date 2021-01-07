@@ -49,8 +49,9 @@ const WeatherContainer = ({
   };
 
   const [index, setIndex] = useState(0);
-  const [isSearched, setIsSearched] = useState(true);
   const [isTriggered, setIsTriggered] = useState(false);
+  const [isSearched, setIsSearched] = useState(true);
+  const [fav, setFav] = useState({});
 
   const todaysDay = () => {
     const days = [
@@ -69,7 +70,7 @@ const WeatherContainer = ({
   };
 
   const searchedCity = () => {
-    setIsTriggered(false);
+    console.log('Hladno je.', cities);
     let addedCity = cities[cities.length - 1].daily[0];
     let todaysTemp = calculateAverageTemp(addedCity.temp);
     let min = (addedCity.temp.min - 273).toFixed(0);
@@ -97,40 +98,28 @@ const WeatherContainer = ({
       sunset: todaysSunset,
       img: img,
     };
-
-    console.log('novo', newProps.name);
     return newProps;
   };
 
   const handleDay = (i) => {
-    setIsSearched(false);
-    setIsTriggered(true);
     setIndex(i);
   };
+
   const handleDelete = (e, city) => {
     e.stopPropagation();
-    setIsSearched(false);
+    // setIsSearched(false);
     deleteCity(city);
   };
 
-  const handleFavorite = (city) => {
-    setIsSearched(false);
-    // setIsTriggered(true);
+  const handleFavorite = (e, city) => {
     favoriteCityWeather(city);
+    setIsSearched(false);
+    setIsTriggered(true);
   };
-
-  if (
-    Object.keys(favoriteCity).length === 0 &&
-    favoriteCity.constructor === Object
-  ) {
-    console.log('prazan je');
-  } else {
-    console.log('pun je');
-  }
-
-  console.log('tu', favoriteCity);
-
-  return (
+  console.log('fav: ', favoriteCity);
+  return cities.length === 0 ? (
+    <h1>Loading</h1>
+  ) : (
     <>
       <div className='heart-img'></div>
       <div className='weather-container'>
@@ -139,22 +128,22 @@ const WeatherContainer = ({
             <div className='degree-location'>
               <div className='degree'>
                 {isSearched && searchedCity().temp}
-                {isTriggered &&
+                {/*isTriggered &&
                 Object.keys(favoriteCity).length === 0 &&
                 favoriteCity.constructor === Object
                   ? calculateAverageTemp(
                       cities[cities.length - 1].daily[index].temp
                     )
-                  : calculateAverageTemp(favoriteCity.daily[index].temp)}
+                  : calculateAverageTemp(favoriteCity.daily[0].temp)} */}
                 &deg;
               </div>
               <div className='location'>
-                {isSearched && searchedCity().name}
+                {/* {isSearched && searchedCity().name}
                 {isTriggered &&
                 Object.keys(favoriteCity).length === 0 &&
                 favoriteCity.constructor === Object
                   ? cities[cities.length - 1].name
-                  : favoriteCity.name}
+                  : 'favoriteCity.name'} */}
               </div>
             </div>
             <div className='weather-image'>
@@ -228,7 +217,7 @@ const WeatherContainer = ({
                 className='city-item'
                 key={city.id}
                 tabIndex='1'
-                onClick={() => handleFavorite(city)}
+                onClick={(e) => handleFavorite(e, city)}
               >
                 <div className='city'>{city.name}</div>
                 <div

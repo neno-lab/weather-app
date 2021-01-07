@@ -8,7 +8,6 @@ import {
 const initialState = {
   city: '',
   cities: [],
-  favoriteCity: {},
 };
 
 const locationReducer = (state = initialState, action) => {
@@ -20,7 +19,7 @@ const locationReducer = (state = initialState, action) => {
       };
 
     case ADD_CITY:
-      console.log('added: ', action.payload);
+      // console.log('added: ', action.payload);
       return {
         ...state,
         cities: [...state.cities, action.payload],
