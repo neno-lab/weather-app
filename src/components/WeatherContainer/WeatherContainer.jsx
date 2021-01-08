@@ -21,7 +21,7 @@ const WeatherContainer = ({ deleteCity, cities }) => {
     hours = hours % 12;
     hours = hours ? hours : 12;
     minutes = minutes < 10 ? minutes : minutes;
-    let formattedTime = 'At ' + hours + ':' + minutes + amPm;
+    let formattedTime = 'At ' + hours + ':' + minutes + ' ' + amPm;
 
     return formattedTime;
   };
@@ -35,7 +35,7 @@ const WeatherContainer = ({ deleteCity, cities }) => {
     hours = hours % 12;
     hours = hours ? hours : 12;
     minutes = minutes < 10 ? minutes : minutes;
-    let formattedTime = 'At ' + hours + ':' + minutes + amPm;
+    let formattedTime = 'At ' + hours + ':' + minutes + ' ' + amPm;
 
     return formattedTime;
   };
@@ -43,6 +43,9 @@ const WeatherContainer = ({ deleteCity, cities }) => {
   const [index, setIndex] = useState(0);
   const [isTriggered, setIsTriggered] = useState(false);
   const [fav, setFav] = useState({});
+  const [isToday, setIsToday] = useState(true);
+  const [isTomorrow, setIsTomorrow] = useState(false);
+  const [isDayAfterTomorrow, setIsDayAfterTomorrow] = useState(false);
 
   const todaysDay = () => {
     let date = new Date();
@@ -78,15 +81,36 @@ const WeatherContainer = ({ deleteCity, cities }) => {
   };
 
   const handleDay = (i) => {
+    switch (i) {
+      case 0:
+        setIsToday(true);
+        setIsTomorrow(false);
+        setIsDayAfterTomorrow(false);
+        break;
+      case 1:
+        setIsToday(false);
+        setIsTomorrow(true);
+        setIsDayAfterTomorrow(false);
+        break;
+      case 2:
+        setIsToday(false);
+        setIsTomorrow(false);
+        setIsDayAfterTomorrow(true);
+        break;
+      default:
+        break;
+    }
     setIndex(i);
   };
+
+  console.log(isToday);
 
   const handleDelete = (e, city) => {
     e.stopPropagation();
     deleteCity(city);
   };
 
-  const handleFavorite = (e, city) => {
+  const handleFavorite = (city) => {
     setIsTriggered(true);
     setFav(city);
   };
@@ -95,7 +119,7 @@ const WeatherContainer = ({ deleteCity, cities }) => {
     <h1>Loading</h1>
   ) : (
     <>
-      <div className='heart-img'></div>
+      {/* <div className='heart-img'></div> */}
       <div className='weather-container'>
         <div className='details-container'>
           <div className='top-details'>
@@ -164,30 +188,22 @@ const WeatherContainer = ({ deleteCity, cities }) => {
 
           <div className='bottom-details'>
             <ul className='days-container'>
-              <li className='days-item'>
-                <p
-                  className='days-title'
-                  tabIndex='1'
-                  onClick={() => handleDay(0)}
-                >
+              <li className={isToday ? 'days-item active' : 'days-item'}>
+                <p className='days-title' onClick={() => handleDay(0)}>
                   Today
                 </p>
               </li>
-              <li className='days-item'>
-                <p
-                  className='days-title'
-                  tabIndex='1'
-                  onClick={() => handleDay(1)}
-                >
+              <li className={isTomorrow ? 'days-item active' : 'days-item'}>
+                <p className='days-title' onClick={() => handleDay(1)}>
                   Tomorrow
                 </p>
               </li>
-              <li className='days-item'>
-                <p
-                  className='days-title'
-                  tabIndex='1'
-                  onClick={() => handleDay(2)}
-                >
+              <li
+                className={
+                  isDayAfterTomorrow ? 'days-item active' : 'days-item'
+                }
+              >
+                <p className='days-title' onClick={() => handleDay(2)}>
                   {todaysDay()}
                 </p>
               </li>
@@ -225,7 +241,7 @@ const WeatherContainer = ({ deleteCity, cities }) => {
                 className='city-item'
                 key={city.id}
                 tabIndex='1'
-                onClick={(e) => handleFavorite(e, city)}
+                onClick={() => handleFavorite(city)}
               >
                 <div className='city'>{city.name}</div>
                 <div

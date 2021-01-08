@@ -31,10 +31,11 @@
       .degree-location {
         background: none;
         display: flex;
-        justify-content: center;
-        align-items: center;
+        justify-content: flex-start;
+        align-items: flex-start;
         flex-direction: column;
         margin-left: 45px;
+        margin-top: 20px;
 
         .degree {
           font-size: 90px;
@@ -77,7 +78,7 @@
       justify-content: flex-start;
       align-items: flex-start;
       flex-direction: column;
-      margin-top: 149px;
+      margin-top: 160px;
       margin-left: 45px;
       margin-right: 628px;
 
@@ -113,25 +114,23 @@
         margin-left: 45px;
         margin-top: 15px;
         margin-bottom: 45px;
-        // position: fixed;
+        overflow: auto;
 
         .days-item {
+          width: 100%;
+          overflow: auto;
           background: none;
           list-style: none;
           cursor: pointer;
-          margin-right: 2px;
-          margin-left: 2px;
+          // margin-right: 2px;
+          // margin-left: 2px;
 
           &:hover {
             border-radius: 15px;
             background-color: #ffffff4d;
+            padding-top: 6px;
+            padding-bottom: 5px;
           }
-
-          // &:focus {
-          //   background-color: $neutral;
-          //   color: $primaryDark;
-          //   outline: none;
-          // }
 
           .days-title {
             background: none;
@@ -146,14 +145,40 @@
             padding-bottom: 9px;
             padding-right: 12px;
             padding-left: 12px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+          }
+        }
 
-            &:focus {
-              background-color: $neutral;
-              color: $primaryDark;
-              outline: none;
-              border-radius: 15px;
-              box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2);
-            }
+        .active {
+          background-color: $neutral;
+          border-radius: 15px;
+          padding-top: 6px;
+          padding-bottom: 5px;
+
+          .days-title {
+            background: none;
+            font-size: 16px;
+            font-weight: normal;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            color: $primaryDark;
+            padding-top: 9px;
+            padding-bottom: 9px;
+            padding-right: 12px;
+            padding-left: 12px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+          }
+
+          &:hover {
+            border-radius: 15px;
+            color: $primaryDark;
+            background-color: $neutral;
+            padding-top: 6px;
+            padding-bottom: 5px;
           }
         }
       }
