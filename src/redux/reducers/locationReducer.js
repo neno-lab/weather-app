@@ -2,7 +2,6 @@ import {
   ADD_CITY,
   ADD_CITY_TO_URL,
   DELETE_CITY,
-  FAVORITE_CITY_WEATHER,
 } from '../actions/locationTypes';
 
 const initialState = {
@@ -19,7 +18,6 @@ const locationReducer = (state = initialState, action) => {
       };
 
     case ADD_CITY:
-      // console.log('added: ', action.payload);
       return {
         ...state,
         cities: [...state.cities, action.payload],
@@ -29,13 +27,6 @@ const locationReducer = (state = initialState, action) => {
       return {
         ...state,
         cities: state.cities.filter((city) => city.id !== action.payload),
-      };
-
-    case FAVORITE_CITY_WEATHER:
-      console.log('choosen: ', action.payload);
-      return {
-        ...state,
-        favoriteCity: action.payload,
       };
     default:
       return state;
