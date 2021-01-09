@@ -28,6 +28,7 @@ const locationReducer = (state = initialState, action) => {
         ...state,
         cities: state.cities.filter((city) => city.id !== action.payload),
       };
+
     default:
       return state;
   }

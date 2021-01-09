@@ -30,6 +30,7 @@
     width: 40px;
     height: 40px;
     margin: 10px;
+    outline: none;
     &:hover {
       background-image: url('../../assets/add-hover.svg');
       transform: scale(1.05);
@@ -41,31 +42,19 @@
 @media (max-width: 500px) {
   .header-container {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-right: 20px;
     margin-left: 20px;
     height: 60px;
     margin-top: 65px;
     position: relative;
 
-    .heart-btn {
-      visibility: visible;
-      position: absolute;
-      left: 260px;
-      cursor: pointer;
-      border: none;
-      background-image: url('../../assets/heart.svg');
-      background-repeat: no-repeat;
-      width: 40px;
-      height: 40px;
-      margin: 10px;
+    // .weather-app-title {
+    //   display: none;
+    // }
 
-      &:hover {
-        background-image: url('../../assets/heart-hover.svg');
-        transform: scale(1.05);
-        transition: 0.3s;
-      }
-    }
+    // .plus-btn {
+    //   position: absolute;
+    //   left: 320px;
+    // }
   }
 }

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import './WeatherContainer.scss';
 import { deleteCity } from '../../redux/actions/locationActions';
+import AddLocation from '../AddLocation/AddLocation';
 
 const WeatherContainer = ({ deleteCity, cities }) => {
   const calculateAverageTemp = (temp) => {
@@ -46,6 +47,9 @@ const WeatherContainer = ({ deleteCity, cities }) => {
   const [isToday, setIsToday] = useState(true);
   const [isTomorrow, setIsTomorrow] = useState(false);
   const [isDayAfterTomorrow, setIsDayAfterTomorrow] = useState(false);
+  const [isOpenSection, setIsOpenSection] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isItemClicked, setIsItemClicked] = useState(false);
 
   const todaysDay = () => {
     let date = new Date();
@@ -113,6 +117,22 @@ const WeatherContainer = ({ deleteCity, cities }) => {
   const handleFavorite = (city) => {
     setIsTriggered(true);
     setFav(city);
+    setIsOpenSection(false);
+  };
+
+  const onClickHeart = (e) => {
+    e.preventDefault();
+    setIsOpenSection(true);
+  };
+
+  const closeSection = (e) => {
+    e.preventDefault();
+    setIsOpenSection(false);
+  };
+
+  const openModal = () => {
+    setIsOpenSection(false);
+    setIsModalOpen(true);
   };
 
   return cities.length === 0 ? (
@@ -251,7 +271,39 @@ const WeatherContainer = ({ deleteCity, cities }) => {
             ))}
           </ul>
         </div>
+
+        <button className='heart-btn' onClick={onClickHeart}></button>
+
+        {isOpenSection && (
+          <div className='select-container'>
+            <div className='select-section'>
+              <button className='cancel-btn' onClick={closeSection}></button>
+              <h2>Cities</h2>
+              <ul>
+                {cities.map((city) => (
+                  <li
+                    key={city.id}
+                    onClick={() => handleFavorite(city)}
+                    className={isItemClicked ? 'item active-item' : 'item'}
+                  >
+                    <div className='city'>{city.name}</div>
+                    <button
+                      className='delete-btn'
+                      onClick={(e) => handleDelete(e, city.id)}
+                    ></button>
+                  </li>
+                ))}
+              </ul>
+              <button className='add-location' onClick={openModal}>
+                Add location
+              </button>
+            </div>
+          </div>
+        )}
       </div>
+      {isModalOpen && (
+        <AddLocation open={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      )}
     </>
   );
 };

@@ -7,12 +7,13 @@ import { bindActionCreators } from 'redux';
 import './AddLocation.scss';
 import { addCityToUrl } from '../../redux/actions/locationActions';
 
-const AddLocation = ({ open, onClose, addCityToUrl }) => {
+const AddLocation = ({ open, addCityToUrl, onClose }) => {
   const { register, handleSubmit } = useForm();
   const [city, setCity] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const onSubmit = (data) => {
     if (!data.city) return;
+    setCity('');
     addCityToUrl(data);
     onClose();
   };
