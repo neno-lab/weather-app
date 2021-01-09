@@ -50,11 +50,6 @@
       line-height: normal;
       letter-spacing: normal;
       font-size: 20px;
-
-      //   &:hover {
-      //     transform: scale(1.05);
-      //     transition: 0.2s;
-      //   }
     }
   }
 }
@@ -66,20 +61,27 @@
     height: 471px;
     margin-top: 41px;
     .default-text {
+      margin-bottom: -40px;
+      .pleading-face {
+        margin: auto;
+        background-color: transparent;
+        background-image: url('../../assets/pleading-face.png');
+        background-repeat: no-repeat;
+        width: 141px;
+        height: 185px;
+      }
       h3 {
-        font-size: 17px;
-        padding-right: 15px;
-        padding-left: 15px;
+        font-size: 21px;
       }
       p {
-        font-size: 14px;
+        font-size: 16px;
         padding-top: 10px;
         padding-top: 10px;
         padding-right: 18px;
         padding-left: 18px;
       }
       button {
-        margin: 25px 30px 35px 30px;
+        margin: 25px 30px 0px 30px;
         width: 316px;
         height: 60px;
       }
