@@ -12,8 +12,120 @@
 }
 
 .select-section {
+  position: relative;
   height: 100%;
   width: 305px;
   margin-left: 109px;
   background-color: $neutral;
+  display: flex;
+  flex-direction: column;
+  margin-right: 23px;
+  align-items: center;
+
+  .cancel-btn {
+    position: absolute;
+    top: 36px;
+    left: 23px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    background-image: url('../../assets/x.svg');
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
+    background-position: center;
+    outline: none;
+
+    &:hover {
+      border-radius: 30px;
+      background-color: $gray;
+    }
+  }
+
+  h2 {
+    position: absolute;
+    top: 108px;
+    left: 23px;
+    background: none;
+    color: $primaryDark;
+    font-size: 40px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+  }
+
+  ul {
+    position: absolute;
+    top: 169px;
+    left: 23px;
+    background: none;
+    margin-top: 21px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-content: center;
+    align-items: center;
+    width: 262px;
+
+    li {
+      background: none;
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+      height: 48px;
+
+      &:hover {
+        border-radius: 15px;
+        background-color: $gray;
+      }
+
+      .city {
+        background: none;
+        color: $primaryDark;
+        font-size: 18px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        padding: 15px 100px 15px 15px;
+      }
+
+      .delete-btn {
+        cursor: pointer;
+        border: none;
+        background-image: url('../../assets/x.svg') !important;
+        background-repeat: no-repeat;
+        width: 30px;
+        height: 30px;
+        background: none;
+        margin-top: 8px;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .add-location {
+    position: absolute;
+    top: 503px;
+    right: 23px;
+    width: 262px;
+    height: 60px;
+    border: none;
+    border-radius: 20px;
+    background-color: $secondary;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+  }
 }

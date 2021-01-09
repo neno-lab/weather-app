@@ -18,7 +18,7 @@ const Header = () => {
         <button className='plus-btn' onClick={onClick}></button>
       </div>
       <AddLocation open={isOpen} onClose={() => setIsOpen(false)} />
-      <SelectContainer />
+      {/* <SelectContainer /> */}
     </>
   );
 };
