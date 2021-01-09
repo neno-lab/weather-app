@@ -119,7 +119,6 @@ const WeatherContainer = ({ deleteCity, cities }) => {
     <h1>Loading</h1>
   ) : (
     <>
-      {/* <div className='heart-img'></div> */}
       <div className='weather-container'>
         <div className='details-container'>
           <div className='top-details'>

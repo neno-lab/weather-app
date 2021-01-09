@@ -1,9 +1,5 @@
 @import '../../root-colors.scss';
 
-.heart-img {
-  display: none;
-}
-
 .weather-container {
   margin-right: 145px;
   margin-left: 145px;
@@ -327,6 +323,64 @@
           background: none;
         }
       }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .weather-container {
+    margin-left: 20px;
+    width: 374px;
+    .details-container {
+      width: 374px;
+      height: 447px;
+      position: relative;
+
+      .top-details {
+        .degree {
+          position: absolute;
+          left: 25px;
+          top: 0px;
+        }
+
+        .location {
+          display: none;
+        }
+
+        .weather-image {
+          position: absolute;
+          left: 240px;
+          top: 0px;
+        }
+      }
+
+      .middle-details {
+        position: absolute;
+        top: -40px;
+        width: 100px;
+        left: -10px;
+      }
+
+      .bottom-details {
+        display: flex;
+        flex-direction: column;
+
+        .days-container {
+          position: absolute;
+          top: 360px;
+          left: -10px;
+        }
+      }
+
+      .sunrise-sunset {
+        position: absolute;
+        top: 300px;
+        left: 40px;
+      }
+    }
+
+    .favorites-container {
+      display: none;
     }
   }
 }
