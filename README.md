@@ -26,7 +26,7 @@ Weather app application allows you to search a specific city to check the weathe
 #### Create .env file in root folder and add your API_KEY
 
 ```
-REACT_APP_API_KEY=your_api_key
+    REACT_APP_API_KEY=your_api_key
 ```
 
 #### Run the script
