@@ -12,6 +12,11 @@
   z-index: 1;
   position: relative;
 
+  .weather-title-mobile,
+  .heart-btn {
+    display: none;
+  }
+
   .details-container {
     width: 749px;
     height: 100%;
@@ -151,6 +156,7 @@
           border-radius: 15px;
           padding-top: 6px;
           padding-bottom: 5px;
+          animation: fillWhite 1.5s;
 
           .days-title {
             background: none;
@@ -175,6 +181,15 @@
             background-color: $neutral;
             padding-top: 6px;
             padding-bottom: 5px;
+          }
+        }
+
+        @keyframes fillWhite {
+          from {
+            background-color: #ffffff4d;
+          }
+          to {
+            background-color: $neutral;
           }
         }
       }
@@ -305,11 +320,21 @@
         &:focus {
           background-color: $secondary;
           outline: none;
+          animation: fillBlue 1.5s;
         }
 
         .city {
           background: none;
           padding-left: 15px;
+        }
+
+        @keyframes fillBlue {
+          from {
+            background-color: $primaryLight;
+          }
+          to {
+            background-color: $secondary;
+          }
         }
 
         .cancel-btn {
@@ -332,7 +357,22 @@
     margin-left: 20px;
     width: 374px;
 
+    .weather-title-mobile {
+      background: none;
+      position: absolute;
+      top: -140px;
+      color: $neutral;
+      font-size: 40px;
+      font-weight: 600;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      display: inline;
+    }
+
     .heart-btn {
+      display: inline;
       position: absolute;
       top: -140px;
       left: 260px;

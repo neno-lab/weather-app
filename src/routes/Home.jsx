@@ -18,16 +18,14 @@ const Home = ({ cities, city, addCity }) => {
             `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`
           );
 
-          // console.log('get: ', getCity);
           const latLon = {
             lat: getCity.data.coord.lat,
             lon: getCity.data.coord.lon,
           };
-          console.log(latLon);
+
           const getWeather = await axios.get(
             `https://api.openweathermap.org/data/2.5/onecall?lat=${latLon.lat}&lon=${latLon.lon}&appid=${API_KEY}`
           );
-          // console.log(getWeather);
 
           let cityProps = {
             id: getCity.data.id,

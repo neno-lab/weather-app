@@ -49,7 +49,7 @@ const WeatherContainer = ({ deleteCity, cities }) => {
   const [isDayAfterTomorrow, setIsDayAfterTomorrow] = useState(false);
   const [isOpenSection, setIsOpenSection] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isItemClicked, setIsItemClicked] = useState(false);
+  const [isItemClicked, setIsItemClicked] = useState('');
 
   const todaysDay = () => {
     let date = new Date();
@@ -107,14 +107,13 @@ const WeatherContainer = ({ deleteCity, cities }) => {
     setIndex(i);
   };
 
-  console.log(isToday);
-
   const handleDelete = (e, city) => {
     e.stopPropagation();
     deleteCity(city);
   };
 
   const handleFavorite = (city) => {
+    setIsItemClicked(city.id);
     setIsTriggered(true);
     setFav(city);
     setIsOpenSection(false);
@@ -272,6 +271,10 @@ const WeatherContainer = ({ deleteCity, cities }) => {
           </ul>
         </div>
 
+        {/* changing weather app title and adding heart btn */}
+        <p className='weather-title-mobile'>
+          {isTriggered ? fav.name : cities[cities.length - 1].name}
+        </p>
         <button className='heart-btn' onClick={onClickHeart}></button>
 
         {isOpenSection && (
@@ -284,7 +287,9 @@ const WeatherContainer = ({ deleteCity, cities }) => {
                   <li
                     key={city.id}
                     onClick={() => handleFavorite(city)}
-                    className={isItemClicked ? 'item active-item' : 'item'}
+                    className={
+                      isItemClicked === city.id ? 'item active-item' : 'item'
+                    }
                   >
                     <div className='city'>{city.name}</div>
                     <button
